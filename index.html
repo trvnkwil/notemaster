@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Notemaster</title>
+  <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+  <link rel="stylesheet" href="tailwind.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { padding: 2em; background-color: #606f7b; }
+</style>
+</head>
+<body>
+<div id="app">
+  <h3 class="text-center text-white">{{title}}</h3>
+<div class="flex flex-col justify-center 
+mt-2 items-center">
+  <div class="form bg-grey-dark rounded-lg w-full">
+      <div class="flex justify-center w-full pt-4">
+        <label class="text-white mr-4">Title</label>
+        <input class="form-control rounded-lg w-1/2" type="text" v-model="note.title">
+      </div>
+      <div class="flex justify-center w-full h-32 mt-4 mb-4">
+        <label class="text-white mr-4">Text</label>
+        <textarea class="form-control h-32 w-1/2 rounded-lg" v-model="note.text"></textarea>
+      </div>
+    </div>
+    <button class="bg-grey mt-8 mb-8 rounded-lg
+w-32 h-8" @click="addNote">Submit</button>
+  </div>
+  <div class="flex flex-col flex-wrap">
+    <div class="note bg-grey-light rounded-lg p-2 m-2
+text-center" v-for="(note, index) in notes">
+      <div class="card">
+          <button class="close flex flex-auto items-center" @click="removeNote(index)">&times;</button>
+        <div class="card-block">
+          <h4 class="card-title">{{note.title}}</h4>
+          <h6 class="card-subtitle mb-2 text-muted">{{note.date}}</h6>
+          <p class="card-text">{{note.text}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      title: 'Notemaster',
+      note: {
+        title: '',
+        text: ''
+      },
+      notes: [
+        {
+          title: 'Lorem',
+          text: 'Lorem ipsum dolor sit amet, sit ut nonumy deseruisse, sed laboramus tincidunt consectetuer ei, per nibh melius option cu. Postea veritus eam in. Iuvaret ornatus quo an. Ne singulis percipitur mea. Nam semper urbanitas cu, vix invidunt praesent an, eros facer per cu. Causae persecuti mei ne. Sea at munere integre.',
+          date: new Date(Date.now()).toLocaleString()
+        }
+      ]
+    },
+    methods: {
+      addNote() {
+        let { text, title } = this.note
+        this.notes.push({
+          text,
+          title,
+          date: new Date(Date.now()).toLocaleString()
+        })
+      },
+      removeNote(index) {
+        this.notes.splice(index, 1)
+      }
+    }
+  })
+</script>   </div>
+</body>
+</html>
